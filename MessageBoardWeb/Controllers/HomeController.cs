@@ -58,9 +58,12 @@ namespace MessageBoardWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DeleteMessageDialog()
+        public ActionResult DeleteMessageDialog(int id)
         {
-            return View();
+            int messageId = id;
+            DBManager dBManager = new DBManager();
+            dBManager.DeleteMessageById(id);
+            return RedirectToAction("Index");
         }
     }
 }

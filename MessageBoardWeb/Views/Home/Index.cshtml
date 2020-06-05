@@ -22,37 +22,16 @@
             {
                 Message message = obj.Key;
                 User user = obj.Value;
-                <tr>
-                    <td white-space:pre>@user.UserName</td>
-                    <td white-space:pre>@message.MessageTitle</td>
-                    <td white-space:pre>@message.MessageContent</td>
-                    <td white-space:pre>@message.Time</td>
-                    <td type="button" class="btn btn-default" data-toggle="modal" data-target="#delete_dialog">delete</td>
-                </tr>
+            <tr>
+                <td white-space:pre>@user.UserName</td>
+                <td white-space:pre>@message.MessageTitle</td>
+                <td white-space:pre>@message.MessageContent</td>
+                <td white-space:pre>@message.Time</td>
+                <td>@Html.ActionLink("delete", "DeleteMessageDialog", "Home",new { @id = message.MessageId}, new { @class = "btn btn-default" })</td>
+            </tr>
             }
         </tbody>
     </table>
       
 </div>
 
-<div id="delete_dialog" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-                <div class="modal-title ">
-                    delete
-                </div>
-            </div>
-            <div class="modal-body">
-                sure to delete message?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
