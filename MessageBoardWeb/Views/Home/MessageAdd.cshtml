@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "MessageAdd";
+}
+
+<h2>MessageAdd</h2>
+<form method="post" action="/Home/MessageAdd">
+    <label>user name :</label>
+    <input type="text" name="UserId" /><br>
+    <label>Title :</label><br>
+    <input type="text" name="MessageTitle" /><br>
+    <label>context :</label><br>
+    <textarea name="MessageContent" rows="10" cols="30"></textarea><br>
+    <input class="btn btn-default" type="submit" value="新增" />
+    @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-default" })
+</form>

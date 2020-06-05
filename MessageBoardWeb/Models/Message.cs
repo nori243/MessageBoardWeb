@@ -13,6 +13,11 @@ namespace MessageBoardWeb.Models
         public int UserId { get; set; }
         public DateTime Time { get; set; }
 
+        public Message()
+        {
+
+        }
+
         public Message(int userId, string title,string content)
         {
             UserId = userId;
