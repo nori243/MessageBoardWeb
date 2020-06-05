@@ -72,6 +72,25 @@ namespace MessageBoardWeb.Models
             return result;
         }
 
+        public User GetUserByName(string name)
+        {
+            User result = null;
+            SqlCommand command = new SqlCommand("", connection);
+            command.CommandText = @"SELECT * FROM UserInfo WHERE UserName = @name";
+            command.Parameters.AddWithValue("@name", name);
+            connection.Open();
+            SqlDataReader dataReader = command.ExecuteReader();
+            if (dataReader.Read())
+            {
+                int userId = int.Parse(dataReader["UserId"].ToString());
+                string userName = dataReader["UserName"].ToString();
+                result = new User(userId, userName);
+            }
+
+            connection.Close();
+            return result;
+        }
+
         public void DeleteUserById(int id)
         {
             SqlCommand command = new SqlCommand("", connection);
