@@ -1,7 +1,7 @@
 ﻿@using MessageBoardWeb.Models;
 @{
     ViewBag.Title = "Home Page";
-    List<Message> messageList = ViewBag.messageList;
+    Dictionary<Message, User> messageList = ViewBag.messageList;
 }
 
 <div class="row">
@@ -18,10 +18,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Message message in messageList)
+            @foreach (var obj in messageList)
             {
+                Message message = obj.Key;
+                User user = obj.Value;
                 <tr>
-                    <td white-space:pre>@message.UserId</td>
+                    <td white-space:pre>@user.UserName</td>
                     <td white-space:pre>@message.MessageTitle</td>
                     <td white-space:pre>@message.MessageContent</td>
                     <td white-space:pre>@message.Time</td>

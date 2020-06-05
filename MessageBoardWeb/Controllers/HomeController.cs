@@ -17,7 +17,16 @@ namespace MessageBoardWeb.Controllers
         public ActionResult Index()
         {
             DBManager dBManager = new DBManager();
-            ViewBag.messageList = dBManager.GetAllMessage();
+            List<Message> messageList = dBManager.GetAllMessage();
+            Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
+
+            foreach (Message message in messageList)
+            {
+                messageWithUserList.Add(message,dBManager.GetUserById(message.UserId));
+            }
+
+            ViewBag.messageList = messageWithUserList;
+
             return View();
         }
 
@@ -27,11 +36,19 @@ namespace MessageBoardWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult MessageAdd(Message message)
+        public ActionResult MessageAdd(Message message,string userName)
         {            
             DBManager dBManager = new DBManager();
+
+            User user = dBManager.GetUserByName(userName);
+            if (user == null)
+            {
+                dBManager.InsertUser(new User(userName));
+            }
+
             try
             {
+                message.UserId = dBManager.GetUserByName(userName).UserId;
                 dBManager.InsertMessage(message);
             }
             catch (Exception e)
