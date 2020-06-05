@@ -15,5 +15,10 @@ namespace MessageBoardWeb.Models
             UserId = id;
             UserName = name;
         }
+
+        public User(string name)
+        {
+            UserName = name;
+        }
     }
 }
