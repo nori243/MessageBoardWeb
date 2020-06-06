@@ -8,7 +8,6 @@
 - 新增
 點選add new message ，輸入使用者的名稱、留言標題以及留言內容，按下Add後即可返回Home，並看到新增的留言。
 ![](https://i.imgur.com/7U1L4KO.png)
-
 ![](https://i.imgur.com/DGmkBZI.png)
 
 - 刪除
