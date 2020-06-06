@@ -139,6 +139,59 @@ namespace MessageBoardWeb.Models
             return allMessage;
         }
 
+        public List<Message> GetMessageByText(string text)
+        {
+            List<Message> allMessage = new List<Message>();
+            SqlCommand command = new SqlCommand("", connection);
+            command.CommandText = @"SELECT * FROM Message WHERE MessageContent LIKE @text OR MessageTitle LIKE @text";
+            command.Parameters.AddWithValue("@text", "%"+text+"%");
+            connection.Open();
+
+            SqlDataReader dataReader = command.ExecuteReader();
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    int messageId = int.Parse(dataReader["MessageId"].ToString());
+                    string messageTitle = dataReader["MessageTitle"].ToString();
+                    string messageContent = dataReader["MessageContent"].ToString();
+                    int userId = int.Parse(dataReader["UserId"].ToString());
+                    DateTime time = (DateTime)dataReader["Time"];
+                    Message message = new Message(messageId, userId, messageTitle, messageContent, time);
+                    allMessage.Add(message);
+                }
+            }
+            connection.Close();
+
+            return allMessage;
+        }
+
+        public List<Message> GetMessageByUserId(int userId)
+        {
+            connection.Open();
+            List<Message> allMessage = new List<Message>();
+            SqlCommand command = new SqlCommand("", connection);
+            command.CommandText = @"SELECT * FROM Message WHERE UserId = @id";
+            command.Parameters.AddWithValue("@id", userId);
+
+            SqlDataReader dataReader = command.ExecuteReader();
+            if (dataReader.HasRows)
+            {
+                while (dataReader.Read())
+                {
+                    int messageId = int.Parse(dataReader["MessageId"].ToString());
+                    string messageTitle = dataReader["MessageTitle"].ToString();
+                    string messageContent = dataReader["MessageContent"].ToString();
+                    DateTime time = (DateTime)dataReader["Time"];
+                    Message message = new Message(messageId, userId, messageTitle, messageContent, time);
+                    allMessage.Add(message);
+                }
+            }
+            connection.Close();
+
+            return allMessage;
+        }
+
         public void InsertMessage(Message message)
         {
             SqlCommand command = new SqlCommand("", connection);

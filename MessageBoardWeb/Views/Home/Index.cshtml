@@ -1,12 +1,26 @@
 ﻿@using MessageBoardWeb.Models;
 @{
     ViewBag.Title = "Home Page";
-    Dictionary<Message, User> messageList = ViewBag.messageList;
+    Dictionary<Message, User> messageList = (Dictionary<Message, User>)TempData["messageList"];
 }
 
 <div class="row">
-        <h2>Getting started</h2>
-        @Html.ActionLink("add new message", "MessageAdd", "Home", new { @class = "btn btn-default" })
+    <h2>Getting started</h2>
+    <label>Search</label>
+
+    <form method="post" action="/Home/SearchByUser">         
+        <label>by user name :</label>
+        <input type="text" name="userName" />
+        <input class="btn btn-default" type="submit" value="Search" />             
+    </form>
+
+    <form method="post" action="/Home/SearchByText">
+    <label>by text :</label>
+    <input type="text" name="text" />
+    <input class="btn btn-default" type="submit" value="Search" />
+    </form>
+    @Html.ActionLink("add new message", "MessageAdd", "Home", new { @class = "btn btn-default" })
+
     <table class="table">
         <thead>
             <tr>
@@ -22,17 +36,17 @@
             {
                 Message message = obj.Key;
                 User user = obj.Value;
-            <tr>
-                <td white-space:pre>@user.UserName</td>
-                <td white-space:pre>@message.MessageTitle</td>
-                <td white-space:pre>@message.MessageContent</td>
-                <td white-space:pre>@message.Time</td>
-                <td>@Html.ActionLink("edit", "EditView", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
-                <td>@Html.ActionLink("delete", "DeleteMessageDialog", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
-            </tr>
+                <tr>
+                    <td white-space:pre>@user.UserName</td>
+                    <td white-space:pre>@message.MessageTitle</td>
+                    <td white-space:pre>@message.MessageContent</td>
+                    <td white-space:pre>@message.Time</td>
+                    <td>@Html.ActionLink("edit", "EditView", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
+                    <td>@Html.ActionLink("delete", "DeleteMessageDialog", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
+                </tr>
             }
         </tbody>
     </table>
-      
+
 </div>
 

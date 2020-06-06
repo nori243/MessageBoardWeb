@@ -20,14 +20,16 @@ namespace MessageBoardWeb.Controllers
             List<Message> messageList = dBManager.GetAllMessage();
             Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
 
-            foreach (Message message in messageList)
+            if (TempData["messageList"] == null)
             {
-                messageWithUserList.Add(message,dBManager.GetUserById(message.UserId));
+                foreach (Message message in messageList)
+                {
+                    messageWithUserList.Add(message, dBManager.GetUserById(message.UserId));
+                }
+
+                TempData["messageList"] = messageWithUserList;
             }
-
-            ViewBag.messageList = messageWithUserList;
-
-            return View();
+           return View();
         }
 
         public ActionResult MessageAdd()
@@ -105,6 +107,37 @@ namespace MessageBoardWeb.Controllers
             {
                 Console.WriteLine(e.ToString());
             }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SearchByUser(string userName)
+        {
+            DBManager dBManager = new DBManager();
+            User user = dBManager.GetUserByName(userName);
+            List<Message> messageList = dBManager.GetMessageByUserId(user.UserId);
+            Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
+
+            foreach (Message message in messageList)
+            {
+                messageWithUserList.Add(message, dBManager.GetUserById(message.UserId));
+            }
+
+            TempData["messageList"] = messageWithUserList;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SearchByText(string text)
+        {
+            DBManager dBManager = new DBManager();
+            List<Message> messageList = dBManager.GetMessageByText(text);
+            Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
+
+            foreach (Message message in messageList)
+            {
+                messageWithUserList.Add(message, dBManager.GetUserById(message.UserId));
+            }
+
+            TempData["messageList"] = messageWithUserList;
             return RedirectToAction("Index");
         }
     }
