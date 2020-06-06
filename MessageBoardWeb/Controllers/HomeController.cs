@@ -16,7 +16,7 @@ namespace MessageBoardWeb.Controllers
         //----controller
         public ActionResult Index()
         {
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             List<Message> messageList = dBManager.GetAllMessage();
             Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
 
@@ -41,7 +41,7 @@ namespace MessageBoardWeb.Controllers
         [HttpPost]
         public ActionResult MessageAdd(Message message,string userName)
         {            
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
 
             User user = dBManager.GetUserByName(userName);
             if (user == null)
@@ -64,14 +64,14 @@ namespace MessageBoardWeb.Controllers
         public ActionResult DeleteMessageDialog(int id)
         {
             int messageId = id;
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             dBManager.DeleteMessageById(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult EditView(int id)
         {
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             Message orgMessage = dBManager.GetMessageById(id);
             User user = dBManager.GetUserById(orgMessage.UserId);
             TempData["orgMessage"] = orgMessage;
@@ -89,7 +89,7 @@ namespace MessageBoardWeb.Controllers
         [HttpPost]
         public ActionResult EditMessageView(Message message,string userName)
         {
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             ViewBag.orgMessage = (Message)TempData["orgMessage"];
             ViewBag.orgUser = (User)TempData["orgUser"];
             User user = dBManager.GetUserByName(userName);
@@ -112,7 +112,7 @@ namespace MessageBoardWeb.Controllers
 
         public ActionResult SearchByUser(string userName)
         {
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             User user = dBManager.GetUserByName(userName);
             List<Message> messageList = dBManager.GetMessageByUserId(user.UserId);
             Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
@@ -128,7 +128,7 @@ namespace MessageBoardWeb.Controllers
 
         public ActionResult SearchByText(string text)
         {
-            DBManager dBManager = new DBManager();
+            DBManager dBManager = DBManager.GetInstanceDBManager();
             List<Message> messageList = dBManager.GetMessageByText(text);
             Dictionary<Message, User> messageWithUserList = new Dictionary<Message, User>();
 

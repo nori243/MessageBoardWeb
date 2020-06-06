@@ -9,10 +9,21 @@ namespace MessageBoardWeb.Models
 {
     public class DBManager
     {
+        private static DBManager instanceDBmanager;
         string connectString = ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
         SqlConnection connection;
 
-        public DBManager()
+        public static DBManager GetInstanceDBManager()
+        {
+            if (instanceDBmanager == null)
+            {
+                instanceDBmanager = new DBManager();
+            }
+
+            return instanceDBmanager;
+        }
+
+        private DBManager()
         {
             connection = new SqlConnection(connectString);        
         }
