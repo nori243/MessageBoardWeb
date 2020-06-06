@@ -27,7 +27,8 @@
                 <td white-space:pre>@message.MessageTitle</td>
                 <td white-space:pre>@message.MessageContent</td>
                 <td white-space:pre>@message.Time</td>
-                <td>@Html.ActionLink("delete", "DeleteMessageDialog", "Home",new { @id = message.MessageId}, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("edit", "EditView", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("delete", "DeleteMessageDialog", "Home", new { @id = message.MessageId }, new { @class = "btn btn-default" })</td>
             </tr>
             }
         </tbody>

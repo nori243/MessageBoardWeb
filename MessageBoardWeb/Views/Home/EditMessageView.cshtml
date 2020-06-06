@@ -1,0 +1,21 @@
+﻿@using MessageBoardWeb.Models;
+
+@{
+    ViewBag.Title = "EditMessageView";
+    Message message = ViewBag.orgMessage;
+}
+
+<h2>EditMessageView</h2>
+
+<form method="post" action="/Home/EditMessageView">
+    <input type="hidden" name="MessageId" value="@message.MessageId" />
+    <input type="hidden" name="MessageId" value="@message.MessageId" />
+    <label>user name :</label>
+    <input type="text" name="userName" value="@ViewBag.orgUser.UserName" /><br>
+    <label>Title :</label><br>
+    <input type="text" name="MessageTitle" value="@message.MessageTitle" /><br>
+    <label>context :</label><br>
+    <textarea name="MessageContent" rows="10" cols="30">@message.MessageContent</textarea><br>
+    <input class="btn btn-default" type="submit" value="Save" />
+    @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-default" })
+</form>
